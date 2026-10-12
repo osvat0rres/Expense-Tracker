@@ -46,3 +46,6 @@ download the packages to connect the frontend with the backend
 ```
 npm install axios react-dom jwt-decode
 ```
+```
+ pip install django-cors-headers
+```
