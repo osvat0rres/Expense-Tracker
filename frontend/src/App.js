@@ -45,56 +45,15 @@ function App() {
 
                 <main style={mainStyle}>
                     <Routes>
-                        {/* Home page */}
-                        <Route
-                            path="/"
-                            element={<Body />}
-                        />
-
-                        {/* About page */}
-                        <Route
-                            path="/about"
-                            element={<About />}
-                        />
-
-                        {/* Login page */}
-                        <Route
-                            path="/login"
-                            element={
-                                <Login
-                                    route="/api/token/"
-                                    method="login"
-                                />
-                            }
-                        />
-
-                        {/* Registration page */}
-                        <Route
-                            path="/register"
-                            element={<RegisterAndLogout />}
-                        />
-
-                        {/* Contact page */}
-                        <Route
-                            path="/contact"
-                            element={<Contact />}
-                        />
-
-                        {/* Logout route */}
-                        <Route
-                            path="/logout"
-                            element={<Logout />}
-                        />
-
-                        {/* Redirect unknown URLs */}
-                        <Route
-                            path="*"
-                            element={<Navigate to="/" replace />}
-                        />
+                     <Route path="/" element={<Body />} />
+                     <Route path="/about" element={<About />}/>
+                     <Route path="/login" element={<Login route="/api/token/" method="login" />} />
+                     <Route path="/register" element={<RegisterAndLogout />} />
+                     <Route path="/contact" element={<Contact />} />
+                     <Route path="/logout" element={<Logout />} />
+                     <Route path="*" element={<Navigate to="/" replace />} />
                     </Routes>
                 </main>
-
-                {/* Footer appears only on the home page */}
                 <Routes>
                     <Route
                         path="/"
@@ -107,3 +66,4 @@ function App() {
 }
 
 export default App;
+
