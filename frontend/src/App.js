@@ -1,22 +1,29 @@
+
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Header from "./components/Header";
 import Body from "./components/Body";
 import Login from "./components/Login";
+import Register from "./components/Register";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-import ProtectedRoute from "./components/ProtectedRoute";
-import Register from "./components/Register";
 
-function Logout(){
-    localStorage.clear()
-    return <Navigate to="/login/" />
+
+// Log out the user and redirect to Login
+function Logout() {
+    localStorage.removeItem("access");
+    localStorage.removeItem("refresh");
+
+    return <Navigate to="/login" replace />;
 }
 
+// Display the Register form
 function RegisterAndLogout() {
-    localStorage.clear()
-    return <Register />
+    localStorage.removeItem("access");
+    localStorage.removeItem("refresh");
+
+    return <Register />;
 }
 
 function App() {
@@ -25,27 +32,75 @@ function App() {
         flexDirection: "column",
         minHeight: "100vh",
         margin: 0,
-    }
+    };
 
-    const mianStyle = { 
-        flex :1
-    }
+    const mainStyle = {
+        flex: 1,
+    };
+
     return (
         <BrowserRouter>
             <div style={appStyle}>
                 <Header />
-                    <main style={mianStyle}>
-                        <Routes>
-                            <Route path="/" element={<Body />} />
-                            <Route path="/about" element={<About />} />
-                            <Route path="/login" element={<Login route="api/token/" method="login"/>} />
-                            <Route path="/contact" element={<Contact />}/>
-                            <Route path="/register" element={<Register />} />
-                        </Routes>
-                    </main>
+
+                <main style={mainStyle}>
                     <Routes>
-                        <Route path="/" element={<Footer />}/>
+                        {/* Home page */}
+                        <Route
+                            path="/"
+                            element={<Body />}
+                        />
+
+                        {/* About page */}
+                        <Route
+                            path="/about"
+                            element={<About />}
+                        />
+
+                        {/* Login page */}
+                        <Route
+                            path="/login"
+                            element={
+                                <Login
+                                    route="/api/token/"
+                                    method="login"
+                                />
+                            }
+                        />
+
+                        {/* Registration page */}
+                        <Route
+                            path="/register"
+                            element={<RegisterAndLogout />}
+                        />
+
+                        {/* Contact page */}
+                        <Route
+                            path="/contact"
+                            element={<Contact />}
+                        />
+
+                        {/* Logout route */}
+                        <Route
+                            path="/logout"
+                            element={<Logout />}
+                        />
+
+                        {/* Redirect unknown URLs */}
+                        <Route
+                            path="*"
+                            element={<Navigate to="/" replace />}
+                        />
                     </Routes>
+                </main>
+
+                {/* Footer appears only on the home page */}
+                <Routes>
+                    <Route
+                        path="/"
+                        element={<Footer />}
+                    />
+                </Routes>
             </div>
         </BrowserRouter>
     );
