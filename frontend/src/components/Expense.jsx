@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import api from "../api";
 
@@ -6,6 +5,7 @@ function Expense() {
     const [expenses, setExpenses] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [username, setUsername] = useState("");
 
     const [formData, setFormData] = useState({
         title: "",
@@ -25,6 +25,18 @@ function Expense() {
             setError("Could not load expenses. Please log in again if needed.");
         }
     };
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const response = await api.get("/user/");
+                setUsername(response.data.username)
+            }catch(err) {
+                console.error("Couild could not get user: ", err)
+            }
+        };
+        fetchUser();
+    }, [])
 
     useEffect(() => {
         fetchExpenses();
@@ -72,22 +84,16 @@ function Expense() {
     };
 
     return (
-        <div style={{ maxWidth: "800px", margin: "40px auto", padding: "20px" }}>
-            <h1>Expense Tracker</h1>
+        <div>
+            <h1>Welcome {username}</h1>
+            <h1>Expense Tracker </h1>
             <p>Add and manage your expenses.</p>
 
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Expense Title</label>
-                    <input
-                        type="text"
-                        name="title"
-                        placeholder="e.g. Grocery shopping"
-                        value={formData.title}
-                        onChange={handleChange}
-                        maxLength={100}
-                        required
-                    />
+                    <input type="text" name="title" placeholder="e.g. Grocery shopping" value={formData.title}
+                        onChange={handleChange}  maxLength={100} required />
                 </div>
 
                 <div>
@@ -110,39 +116,20 @@ function Expense() {
 
                 <div>
                     <label>Amount ($)</label>
-                    <input
-                        type="number"
-                        name="spend"
-                        placeholder="0.00"
-                        value={formData.spend}
-                        onChange={handleChange}
-                        min="0.01"
-                        step="0.01"
-                        required
-                    />
+                    <input type="number" name="spend" placeholder="0.00" value={formData.spend} 
+                     onChange={handleChange} min="0.01" step="0.01" required />
                 </div>
 
                 <div>
                     <label>Description</label>
-                    <textarea
-                        name="description"
-                        placeholder="Add details about this expense"
-                        value={formData.description}
-                        onChange={handleChange}
-                        maxLength={500}
-                        required
-                    />
+                    <textarea name="description" placeholder="Add details about this expense"
+                        value={formData.description} onChange={handleChange} maxLength={500} required />
                 </div>
 
                 <div>
                     <label>Date of Expense</label>
-                    <input
-                        type="datetime-local"
-                        name="spend_date"
-                        value={formData.spend_date}
-                        onChange={handleChange}
-                        required
-                    />
+                    <input type="datetime-local" name="spend_date" value={formData.spend_date}
+                        onChange={handleChange} required  />
                 </div>
 
                 <button type="submit" disabled={loading}>
@@ -150,7 +137,7 @@ function Expense() {
                 </button>
             </form>
 
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            <p style={{color: "red"}} >{error}</p>
 
             <hr />
 
@@ -160,15 +147,7 @@ function Expense() {
                 <p>No expenses added yet.</p>
             ) : (
                 expenses.map((expense) => (
-                    <div
-                        key={expense.id}
-                        style={{
-                            border: "1px solid #ddd",
-                            borderRadius: "10px",
-                            padding: "15px",
-                            marginBottom: "12px",
-                        }}
-                    >
+                    <div key={expense.id} >
                         <h3>{expense.title}</h3>
                         <p>Category: {expense.category}</p>
                         <p>Amount: ${Number(expense.spend).toFixed(2)}</p>
