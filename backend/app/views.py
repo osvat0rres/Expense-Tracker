@@ -7,9 +7,17 @@ from rest_framework import generics
 from django.db import models
 from rest_framework.permissions import IsAdminUser,AllowAny, IsAuthenticated
 from django.contrib.auth import get_user_model
+from rest_framework.views import APIView
 
 
-
+class CurrentUserView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        return Response({
+            "username" : request.user.username,
+            "email" : request.user.email
+        })
 
 
 class ExpensesListCreateView(generics.ListCreateAPIView):
@@ -18,11 +26,12 @@ class ExpensesListCreateView(generics.ListCreateAPIView):
     
     def get_queryset(self):
         #Super user can see everything
-        if self.request.user.is_superuser:
-            return Expenses.objects.select_related("user").all()
+        return Expenses.objects.filter(
+            user=self.request.user
+        ).select_related("user")
         
-        return Expenses.objects.filter(user=self.request.user).select_related("user")
-    
+    def perform_create(self, serilaizer):
+        serilaizer.save(user=self.request.user)
         
     def get_total_exepenses(self):
         total_expenses = self.get_queryset().aggregate(total=models.Sum('amount'))['total']
@@ -87,3 +96,4 @@ class RegisterUserView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
     permission_classes = [AllowAny]
+
