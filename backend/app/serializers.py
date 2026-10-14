@@ -2,6 +2,10 @@ from rest_framework import serializers
 from .models import Expenses, User
 
 class ExpensesSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
+
     class Meta:
         model = Expenses
         fields = (
@@ -13,12 +17,14 @@ class ExpensesSerializer(serializers.ModelSerializer):
             'spend_date',
             'created_at'
         )
-    def validate_price(self,value):
+
+    def validate_spend(self, value):
         if value <= 0:
             raise serializers.ValidationError(
-                "Spend most be grated then 0."
+                "Spend must be greater than 0."
             )
         return value
+
     
     
 #This serializer is for the total view
