@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import api from "../api";
+import "../style/Expense.css"
 
 function Expense() {
     const [expenses, setExpenses] = useState([]);
@@ -84,21 +85,21 @@ function Expense() {
     };
 
     return (
-        <div>
+        <div className="body">
             <h1>Welcome {username}</h1>
             <h1>Expense Tracker </h1>
             <p>Add and manage your expenses.</p>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="formSection">
                 <div>
                     <label>Expense Title</label>
                     <input type="text" name="title" placeholder="e.g. Grocery shopping" value={formData.title}
                         onChange={handleChange}  maxLength={100} required />
                 </div>
 
-                <div>
+                <div className="category">
                     <label>Category</label>
-                    <select
+                    <select 
                         name="category"
                         value={formData.category}
                         onChange={handleChange}
@@ -114,19 +115,19 @@ function Expense() {
                     </select>
                 </div>
 
-                <div>
+                <div className="amount">
                     <label>Amount ($)</label>
                     <input type="number" name="spend" placeholder="0.00" value={formData.spend} 
                      onChange={handleChange} min="0.01" step="0.01" required />
                 </div>
 
-                <div>
+                <div className="description">
                     <label>Description</label>
                     <textarea name="description" placeholder="Add details about this expense"
                         value={formData.description} onChange={handleChange} maxLength={500} required />
                 </div>
 
-                <div>
+                <div className="date-of-expense">
                     <label>Date of Expense</label>
                     <input type="datetime-local" name="spend_date" value={formData.spend_date}
                         onChange={handleChange} required  />
@@ -147,7 +148,7 @@ function Expense() {
                 <p>No expenses added yet.</p>
             ) : (
                 expenses.map((expense) => (
-                    <div key={expense.id} >
+                    <div className="expense-card" key={expense.id} >
                         <h3>{expense.title}</h3>
                         <p>Category: {expense.category}</p>
                         <p>Amount: ${Number(expense.spend).toFixed(2)}</p>
