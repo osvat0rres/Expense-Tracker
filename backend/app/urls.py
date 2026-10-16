@@ -14,5 +14,5 @@ urlpatterns = [
     path("update/delete/<int:pk>/", views.ExpensesDeatailView.as_view()),
     path("register/", views.RegisterUserView.as_view()),
     path("user/", views.CurrentUserView.as_view()),
-    path("", include(router.urls)),
+    path("review/", include(router.urls)),
 ]
