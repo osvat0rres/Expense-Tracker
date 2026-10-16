@@ -1,13 +1,21 @@
-from django.shortcuts import get_object_or_404
-from .serializers import ExpensesSerializer, ExpensesReturnSerializer, RegisterSerializer
-from app.models import Expenses
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
-from rest_framework import generics
-from django.db import models
-from rest_framework.permissions import IsAdminUser,AllowAny, IsAuthenticated
-from django.contrib.auth import get_user_model
-from rest_framework.views import APIView
+from django.shortcuts import get_object_or_404 
+from .serializers import ( ExpensesSerializer, 
+                          ExpensesReturnSerializer,
+                          RegisterSerializer, 
+                          ReviewSerializer) 
+
+from app.models import Expenses, Review 
+from rest_framework.response import Response 
+from rest_framework.decorators import api_view 
+from rest_framework import generics, status, viewsets 
+from django.db import models 
+from rest_framework.permissions import ( IsAdminUser,
+                                        AllowAny, 
+                                        IsAuthenticated) 
+from django.contrib.auth import get_user_model 
+from rest_framework.views import APIView 
+from rest_framework.decorators import action 
+from .permissions import isReviewOwnerOrReadOnly
 
 
 class CurrentUserView(APIView):
@@ -97,3 +105,33 @@ class RegisterUserView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
     permission_classes = [AllowAny]
 
+
+class ReviewViewSet(viewsets.ModelViewSet):
+    serializer_class = ReviewSerializer
+    permission_classes = [isReviewOwnerOrReadOnly]
+    queryset = Review.objects.select_related("user").all()
+
+    def perform_create(self, serializer):
+        # Automatically assign the authenticated user.
+        serializer.save(user=self.request.user)
+
+    @action(
+        detail=False,
+        methods=["get"],
+        url_path="mine",
+        permission_classes=[IsAuthenticated],
+    )
+    def mine(self, request):
+        # Only return the review belonging to the logged-in user.
+        review = Review.objects.filter(
+            user=request.user
+        ).first()
+
+        if review is None:
+            return Response(
+                {"detail": "You have not submitted a review yet."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        serializer = self.get_serializer(review)
+        return Response(serializer.data)

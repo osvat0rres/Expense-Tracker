@@ -52,7 +52,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 class ReviewSerializer(serializers.ModelSerializer):
     usename = serializers.CharField(
-        source="user.username"
+        source="user.username",
         read_only=True
     )
     
