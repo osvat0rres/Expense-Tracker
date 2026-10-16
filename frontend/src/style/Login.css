@@ -1,3 +1,4 @@
+
 /* General page styling */
 body {
 margin: 0;
@@ -157,3 +158,160 @@ padding: 30px 22px;
 
 
 }
+
+/* General page styling */
+body {
+margin: 0;
+font-family: Arial, Helvetica, sans-serif;
+background: linear-gradient(135deg, #edf4ff, #f7f9fc);
+min-height: 100vh;
+}
+
+/* Main login card */
+.mainBox {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 50px;
+
+
+max-width: 900px;
+width: calc(100% - 60px);
+margin: 80px auto;
+padding: 45px;
+
+box-sizing: border-box;
+background-color: white;
+border-radius: 20px;
+box-shadow: 0 12px 40px rgba(0, 0, 0, 0.10);
+
+}
+
+/* Welcome heading */
+.main-header {
+color: #2c5da8;
+font-size: 28px;
+margin: 0;
+text-align: center;
+}
+
+/* Login form */
+.mainBox form {
+flex: 1;
+max-width: 380px;
+min-width: 0;
+}
+
+/* Login title */
+#login {
+text-align: center;
+margin: 0 0 30px;
+font-size: 30px;
+color: #222b45;
+}
+
+/* Form layout */
+.main-body {
+display: grid;
+gap: 18px;
+}
+
+/* Input fields */
+.main-body input {
+box-sizing: border-box;
+width: 100%;
+padding: 14px 16px;
+
+border: 1px solid #d5dce8;
+border-radius: 10px;
+background-color: #f9fbff;
+
+font-size: 15px;
+color: #333;
+outline: none;
+transition: border-color 0.2s, box-shadow 0.2s;
+
+
+}
+
+/* Input focus effect */
+.main-body input:focus {
+border-color: #4a90e2;
+box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.13);
+background-color: white;
+}
+
+/* Sign-in button */
+.main-body button {
+padding: 14px;
+margin-top: 5px;
+
+
+background: linear-gradient(135deg, #4a90e2, #357abd);
+color: white;
+
+border: none;
+border-radius: 10px;
+font-size: 16px;
+font-weight: bold;
+
+cursor: pointer;
+transition: transform 0.2s, box-shadow 0.2s;
+
+
+}
+
+/* Button hover */
+.main-body button:hover {
+box-shadow: 0 6px 15px rgba(53, 122, 189, 0.3);
+transform: translateY(-2px);
+}
+
+/* Button click */
+.main-body button:active {
+transform: scale(0.98);
+}
+
+/* Illustration section */
+.login-image {
+flex: 1;
+display: flex;
+justify-content: center;
+align-items: center;
+min-width: 0;
+}
+
+.login-image img {
+width: 100%;
+max-width: 320px;
+height: auto;
+object-fit: contain;
+}
+
+/* Responsive layout for phones */
+@media (max-width: 700px) {
+.mainBox {
+flex-direction: column;
+gap: 30px;
+width: calc(100% - 32px);
+margin: 30px auto;
+padding: 30px 22px;
+}
+
+
+.main-header {
+    font-size: 24px;
+}
+
+.mainBox form {
+    width: 100%;
+    max-width: none;
+}
+
+.login-image img {
+    max-width: 200px;
+}
+
+
+}
+

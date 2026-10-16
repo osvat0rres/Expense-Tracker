@@ -1,9 +1,6 @@
 import React from "react";
 import "../style/Extra.css";
 
-
-
-
 function Extra(){
     return(
         <section className="main-box">

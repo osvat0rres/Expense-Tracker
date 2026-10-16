@@ -9,3 +9,4 @@ urlpatterns = [
     path('register/',views.RegisterUserView.as_view()),
     path("user/", views.CurrentUserView.as_view()),
 ]
+

@@ -212,3 +212,264 @@
         box-shadow 0.2s ease,
         opacity 0.2s ease;
 }
+
+.formSection button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.25);
+}
+
+
+.formSection button:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.formSection button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.expense-error {
+    margin: 18px 0 0;
+    padding: 12px 14px;
+    border: 1px solid #fecaca;
+    border-radius: 10px;
+    background: #fef2f2;
+    color: #b91c1c;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+/* Expense list */
+.expense-list{
+    min-height: 260px;
+}
+
+.expense-list{
+    display: flex;
+    flex-direction:column;
+    gap: 14px;
+}
+
+/* Each spense card */
+.expense-card{
+    min-width: 0;
+    padding: 20px;
+
+    border: 1px solid #e8eaf5;
+    border-left: 4px solid #1f7fde;
+    border-radius: 14px;
+
+    background: #fcfcff;
+
+    overflow-wrap: anywhere;
+
+     transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.expense-card:hover{
+     transform: translateY(-2px);
+    border-color: #d8ccff;
+    box-shadow: 0 8px 22px rgba(30, 41, 59, 0.07);
+}
+
+.expense-card-top{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.expense-card h3 {
+    min-width: 0;
+    margin: 0;
+    color: #29324a;
+    font-size: 17px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.expense-amount {
+    color: #6d28d9;
+    font-size: 19px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.expense-category{
+    display: inline-block;
+    max-width: 100%;
+    padding: 5px 10px;
+
+    border-radius: 20px;
+    background: #ede9fe;
+    color:  #6d28d9;
+
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: capitalize;
+    overflow-wrap: anywhere
+}
+
+.expense-date {
+    margin: 0;
+    padding-top: 12px;
+    border-top: 1px solid #edf0f7;
+    color: #94a3b8;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.empty-expenses {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 250px;
+    padding: 24px;
+    text-align: center;
+}
+
+.empty-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    margin-bottom: 16px;
+
+    border-radius: 18px;
+    background: #ede9fe;
+    color: #7c3aed;
+
+    font-size: 28px;
+    font-weight: 800;
+}
+
+.empty-expenses h3 {
+    margin: 0 0 8px;
+    color: #334155;
+    font-size: 17px;
+}
+
+.empty-expenses p {
+    max-width: 260px;
+    margin: 0;
+    color: #94a3b8;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+
+/* tablet */
+
+@media (max-width: 1000px) {
+    .expense-page {
+        padding: 32px 24px;
+    }
+
+    .expense-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 24px;
+    }
+
+    .expense-panel,
+    .expenses-panel {
+        width: 100%;
+    }
+
+    .expenses-panel {
+        min-height: 0;
+    }
+
+    .empty-expenses {
+        min-height: 200px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .expense-page {
+        padding: 24px 14px;
+    }
+
+    .expense-header {
+        margin-bottom: 24px;
+    }
+
+    .expense-header h1 {
+        font-size: 32px;
+        letter-spacing: -0.7px;
+    }
+
+    .page-description {
+        font-size: 14px;
+    }
+
+    .expense-panel,
+    .expenses-panel {
+        padding: 20px 16px;
+        border-radius: 17px;
+    }
+
+    .panel-heading {
+        margin-bottom: 22px;
+    }
+
+    .panel-heading h2 {
+        font-size: 21px;
+    }
+
+    .formSection {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 18px;
+    }
+
+    .formSection .description,
+    .formSection .date-of-expense,
+    .formSection button {
+        grid-column: 1;
+    }
+
+    .formSection input,
+    .formSection select,
+    .formSection textarea {
+        font-size: 16px;
+    }
+
+    .formSection button {
+        min-height: 48px;
+    }
+
+    .expense-card {
+        padding: 16px;
+    }
+
+    .expense-card h3 {
+        font-size: 16px;
+    }
+
+    .expense-amount {
+        font-size: 17px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .expense-card,
+    .formSection button,
+    .formSection input,
+    .formSection select,
+    .formSection textarea {
+        transition: none;
+    }
+
+    .expense-card:hover,
+    .formSection button:hover:not(:disabled) {
+        transform: none;
+    }
+}

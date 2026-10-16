@@ -3,6 +3,7 @@ import React from "react";
 import "../style/Body.css";
 import { useNavigate } from "react-router-dom";
 import Extra from "./Extra";
+import logo from "../images/ExampleDemo.png";
 
 
 
@@ -15,10 +16,10 @@ function Body(){
                     <section className="announcement-box">
 
                         <section className="announcement-image">
-                            <img src="/" alt="Expense tracker illurstation"></img>
+                            <img src={logo} alt="Expense tracker illurstation"></img>
                         </section>
 
-                        <section className="announcement-conten">
+                        <section className="announcement-content">
                             <p className="announcement-subtitle">
                                 welcome
                             </p>
@@ -32,7 +33,7 @@ function Body(){
                             <button type="button"  className="announcement-button"
                                         onClick={() => navigate("/login")}>
                                         Get Started
-                                    </button>
+                            </button>
                         </section>
                     </section>
                 </main>
