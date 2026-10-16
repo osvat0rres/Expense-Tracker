@@ -1,5 +1,6 @@
 from django.db import models   
 from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 
 class User(AbstractUser):
     pass
@@ -29,5 +30,22 @@ class Expenses(models.Model):
     def __str__(self):
         return f"Expense: {self.user}: {self.title} ${self.spend}"
     
+
+class Review(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="expense_tracker_review"
+    )
     
+    rating = models.PositiveSmallIntegerField()
+    comment = models.TextField(max_length=1000)
+    created_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now_add=True)
     
+    class Meta:
+        ordering =["-created_at"]
+    
+    def __str__(self):
+        return f"{self.user.username} - {self.rating}/5"
+
