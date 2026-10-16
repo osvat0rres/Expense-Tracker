@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "./Navbar";
 import '../style/Header.css';
+import { Link  } from "react-router-dom";
 
 function Header(){
     return(
@@ -8,7 +9,7 @@ function Header(){
             <section className="header-top">
                 {/* Logo */}
                 <section className="header-top__logo">
-                    <a href="/" className="header-logo">Expenses</a>
+                    <Link href="/" className="header-logo">Expenses</Link>
                 </section>
                 {/*Navigation */}
                 <section className="header-top__nav">

@@ -48,50 +48,41 @@ class RegisterSerializer(serializers.ModelSerializer):
         )
 
         return user 
-        
 
 class ReviewSerializer(serializers.ModelSerializer):
-    usename = serializers.CharField(
-        source="user.username",
-        read_only=True
-    )
+    username = serializers.CharField( source="user.username", read_only=True )
     
-    class Meta:
-        model =Review
-        fields = [
-            "id",
-            "user",
-            "username",
-            "rating",
-            "comment",
-            "created_at",
-            "updated_at",
-        ]
+    class Meta: 
+        model = Review 
+        fields = [ 
+                  "id",
+                  "user", 
+                  "username", 
+                  "rating",
+                  "comment",
+                  "created_at", 
+                  ]
         
-        read_only_fields =[
-            "id",
-            "user",
-            "username",
-            "created_at",
-            "updated_at",
-        ]
-    
-    def validate_rating(self, value):
-        if not 1 <= value <= 5:
-            raise serializers.ValidationError(
-                "Rating must be between 1 and 5"
-            )
-    
-    def validate_comment(self,value):
-        value = value.strip()
+        read_only_fields = [ 
+                            "id", 
+                            "user", 
+                            "username", 
+                            "created_at", ]
         
-        if not value:
-            raise serializers.ValidationError(
-                "Please wirite a rivew before submitting."
-            )
+        def validate_rating(self, value): 
+            if not 1 <= value <= 5: 
+                raise serializers.ValidationError( 
+                        "Rating must be between 1 and 5." 
+                                    )
+            return value
         
-        if len(value) < 50:
-            raise serializers.ValidationError(
-                "Review most be grater then 50 characters"
-            )
-        return value.strip()
+        def validate_comment(self, value): 
+            value = value.strip() 
+            if not value: 
+                raise serializers.ValidationError( "Please write a review before submitting." )
+            
+            if len(value) < 10: 
+                raise serializers.ValidationError( "Your review must contain at least 10 characters." ) 
+            return value
+            
+            

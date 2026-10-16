@@ -9,20 +9,21 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Expense from "./components/Expense";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "./constants";
 
 
 // Log out the user and redirect to Login
 function Logout() {
-    localStorage.removeItem("access");
-    localStorage.removeItem("refresh");
+    localStorage.removeItem(ACCESS_TOKEN);
+    localStorage.removeItem(REFRESH_TOKEN);
 
     return <Navigate to="/login" replace />;
 }
 
 // Display the Register form
 function RegisterAndLogout() {
-    localStorage.removeItem("access");
-    localStorage.removeItem("refresh");
+    localStorage.removeItem(ACCESS_TOKEN);
+    localStorage.removeItem(REFRESH_TOKEN);
 
     return <Register />;
 }

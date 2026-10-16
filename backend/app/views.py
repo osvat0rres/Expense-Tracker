@@ -113,6 +113,12 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         # Automatically assign the authenticated user.
+        rating = serializer.validated_data.get("rating")
+        
+        if rating is None:
+            raise serializer.Validated_data.get({
+                "rating" : "A rating is required."
+            })
         serializer.save(user=self.request.user)
 
     @action(
