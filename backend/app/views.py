@@ -33,21 +33,18 @@ class ExpensesListCreateView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     
     def get_queryset(self):
-        #Super user can see everything
-        return Expenses.objects.filter(
-            user=self.request.user
-        ).select_related("user")
+        user = self.request.user
         
-    def perform_create(self, serilaizer):
-        serilaizer.save(user=self.request.user)
-        
-    def get_total_exepenses(self):
-        total_expenses = self.get_queryset().aggregate(total=models.Sum('amount'))['total']
-        return total_expenses if total_expenses is not None else 0
+        if user.is_superuser:
+            return Expenses.objects.select_related("user").all()
+        return Expenses.objects.filter(user=user).select_related("user")
     
     def perform_create(self, serializer):
-        # Automatically assign the logged-in user
         serializer.save(user=self.request.user)
+    
+    
+      
+       
     
     
 class ExpensesDeatailView(generics.RetrieveUpdateDestroyAPIView):

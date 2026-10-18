@@ -17,6 +17,12 @@ class ExpensesSerializer(serializers.ModelSerializer):
             'spend_date',
             'created_at'
         )
+        
+        read_only_fields = [
+            "id",
+            "user",
+            "created_at"
+        ]
 
     def validate_spend(self, value):
         if value <= 0:
