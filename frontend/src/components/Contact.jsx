@@ -2,6 +2,7 @@ import React, { useState, useEffect} from "react";
 import api from "../api";
 import { ACCESS_TOKEN } from "../constants";
 import { data } from "react-router-dom";
+import "../style/Contact.css";
 
 
 function Contact(){
