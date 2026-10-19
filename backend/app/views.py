@@ -17,6 +17,8 @@ from rest_framework.views import APIView
 from rest_framework.decorators import action 
 from .permissions import isReviewOwnerOrReadOnly
 
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 
 class CurrentUserView(APIView):
     permission_classes = [IsAuthenticated]
@@ -32,8 +34,14 @@ class ExpensesListCreateView(generics.ListCreateAPIView):
     serializer_class = ExpensesSerializer
     permission_classes = [IsAuthenticated]
     
+    @method_decorator(cache_page(60 * 15, key_prefix="expense"))
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+    
     def get_queryset(self):
         user = self.request.user
+        import time
+        time.sleep(2)
         
         if user.is_superuser:
             return Expenses.objects.select_related("user").all()
@@ -42,11 +50,7 @@ class ExpensesListCreateView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
     
-    
-      
-       
-    
-    
+
 class ExpensesDeatailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Expenses.objects.all()
     serializer_class = ExpensesSerializer
