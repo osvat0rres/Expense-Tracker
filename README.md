@@ -7,21 +7,17 @@ This application is still in progress.
    - Password Authentication
 2. Add an expense
 3. view Expenses
-4. edit expensive
-5. Delete expenses
-6. expense categories
+4. expense categories
    - food
    - entertainment
    - Bills
    - shopping
    - education
    - other
-7. monthly dashboard
+5. monthly dashboard
 - will tell you how much you spend in a month or week
-8. Search and Filter
-9. Monthly/weekly repost
-10. Budget system
-11. Recurring expenses
+6. Budget system
+7. Recurring expenses
 
 Django rest-freamework
 ```
