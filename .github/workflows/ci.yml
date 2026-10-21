@@ -1,0 +1,26 @@
+
+name: Expense Tracker CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  docker-build:
+    name: Build Docker Images
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Django backend
+        run: docker build -t expense-tracker-backend:ci ./backend
+
+      - name: Build React frontend
+        run: |
+          docker build \
+            --build-arg REACT_APP_API_URL=http://localhost:8000 \
+            -t expense-tracker-frontend:ci ./frontend
