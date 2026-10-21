@@ -77,4 +77,4 @@ after creating a new key run
 docker compose up -d --build backend
 ```
 
-change privilagres
+I change the email
