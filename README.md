@@ -51,3 +51,28 @@ install validator
 ```
 npm install validator
 ```
+uses this commands to run the website in docker
+
+1. Go inside the root directory
+2. 
+```
+docker compose up -d
+```
+
+to stop the container when you are done
+```
+docker compose down
+```
+Local URLs
+- Frontend: http://localhost:3000
+- Backend: http://localhost:8000
+
+Building a new key 
+```
+python -c "import secrets; print(secrets.token_urlsafe(50))"
+```
+
+after creating a new key run
+```
+docker compose up -d --build backend
+```
