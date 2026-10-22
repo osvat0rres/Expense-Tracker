@@ -7,6 +7,9 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
   docker-build:
     name: Build Docker Images
@@ -24,3 +27,48 @@ jobs:
           docker build \
             --build-arg REACT_APP_API_URL=http://localhost:8000 \
             -t expense-tracker-frontend:ci ./frontend
+
+  publish:
+    name: Publish Docker Images to GHCR
+    runs-on: ubuntu-latest
+    needs: docker-build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set lowercase image owner
+        id: owner
+        run: echo "name=${GITHUB_REPOSITORY_OWNER,,}" >> "$GITHUB_OUTPUT"
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and publish Django backend
+        uses: docker/build-push-action@v6
+        with:
+          context: ./backend
+          push: true
+          tags: |
+            ghcr.io/${{ steps.owner.outputs.name }}/expense-tracker-backend:latest
+            ghcr.io/${{ steps.owner.outputs.name }}/expense-tracker-backend:${{ github.sha }}
+
+      - name: Build and publish React frontend
+        uses: docker/build-push-action@v6
+        with:
+          context: ./frontend
+          push: true
+          build-args: |
+            REACT_APP_API_URL=http://localhost:8000
+          tags: |
+            ghcr.io/${{ steps.owner.outputs.name }}/expense-tracker-frontend:latest
+            ghcr.io/${{ steps.owner.outputs.name }}/expense-tracker-frontend:${{ github.sha }}
