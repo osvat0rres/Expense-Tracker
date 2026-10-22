@@ -69,14 +69,22 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
+# CORS_ALLOWED_ORIGINS = [
+#     origin.strip()
+#     for origin in os.environ.get(
+#         "CORS_ALLOWED_ORIGINS",
+#         "http://localhost:3000,http://127.0.0.1:3000"
+#     ).split(",")
+#     if origin.strip()
+# ]
+
 CORS_ALLOWED_ORIGINS = [
-    origin.strip()
-    for origin in os.environ.get(
-        "CORS_ALLOWED_ORIGINS",
-        "http://localhost:3000,http://127.0.0.1:3000"
-    ).split(",")
-    if origin.strip()
+    "https://expense-tracker-frontend-rufm.onrender.com",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
 ]
+
+
 
 ROOT_URLCONF = 'backend.urls'
 
