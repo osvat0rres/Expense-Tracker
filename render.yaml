@@ -1,0 +1,10 @@
+
+services:
+  - type: web
+    name: expense-tracker-frontend
+    runtime: static
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/build
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://expense-tracker-ofid.onrender.com
