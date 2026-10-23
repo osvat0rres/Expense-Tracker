@@ -24,7 +24,7 @@ function Body(){
                                 welcome
                             </p>
                             <h1 className="announcement-title">
-                                Take Controle of Your Exepense
+                                Take Controle of Your Own Exepense
                             </h1>
                             <p>
                                 Keep tack of your spending, manage your budges and 
