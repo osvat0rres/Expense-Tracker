@@ -105,7 +105,6 @@ Building a new key
 ```
 python -c "import secrets; print(secrets.token_urlsafe(50))"
 ```
-
 after creating a new key run
 ```
 docker compose up -d --build backend
